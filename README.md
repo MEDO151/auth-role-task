@@ -20,8 +20,7 @@ The project includes:
 
 ### Frontend
 
-* Next.js 15 (App Router)
-* React 19
+* Next.js (App Router)
 * TypeScript
 * Tailwind CSS
 * Shadcn UI
@@ -149,13 +148,13 @@ src
 Clone the repository:
 
 ```bash
-git clone <your-repository-url>
+git clone <https://github.com/MEDO151/auth-role-task>
 ```
 
 Navigate into the project:
 
 ```bash
-cd your-project-name
+cd cleaning-services-platform
 ```
 
 Install dependencies:
@@ -171,7 +170,7 @@ npm install
 Create a `.env.local` file in the root directory:
 
 ```env
-NEXT_PUBLIC_API_URL=your_api_url
+NEXT_PUBLIC_API_URL=****************
 ```
 
 ---
