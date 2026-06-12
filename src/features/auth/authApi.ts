@@ -1,57 +1,26 @@
 import {
   createApi,
-} from '@reduxjs/toolkit/query/react';
+} from "@reduxjs/toolkit/query/react";
 
-import { baseQuery }
-  from '@/lib/baseQuery';
+import { baseQueryWithRefresh }
+  from "@/lib/baseQuery";
 
 import type {
   LoginPayload,
   LoginResponse,
   MeResponse,
-} from './types';
+} from "../../types/auth";
 
 export const authApi =
   createApi({
-    reducerPath:
-      'authApi',
+    reducerPath:"authApi",baseQuery:baseQueryWithRefresh,tagTypes:["CurrentUser",], 
 
-    baseQuery,
+    endpoints: (builder) => ({
+      login:builder.mutation<LoginResponse,LoginPayload>({
+          query: (body) => ({url:"/api/auth/login",method:"POST",body,}),invalidatesTags: ["CurrentUser",],}),
 
-    endpoints: (
-      builder
-    ) => ({
-      login:
-        builder.mutation<
-          LoginResponse,
-          LoginPayload
-        >({
-          query: (
-            body
-          ) => ({
-            url:
-              '/api/auth/login',
-
-            method:
-              'POST',
-
-            body,
-          }),
-        }),
-
-      getCurrentUser:
-        builder.query<
-          MeResponse,
-          void
-        >({
-          query: () => ({
-            url:
-              '/api/auth/me',
-
-            method:
-              'GET',
-          }),
-        }),
+      getCurrentUser:builder.query<MeResponse,void>({
+          query:() => ({url:"/api/auth/me",method:"GET"}),providesTags:["CurrentUser",],}),
     }),
   });
 

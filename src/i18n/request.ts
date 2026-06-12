@@ -28,14 +28,6 @@ export default getRequestConfig(
         ? requestedLocale
         : routing.defaultLocale;
 
-    return {
-      locale,
-      messages:
-        messages[
-          locale as
-            | 'en'
-            | 'ar'
-        ],
-    };
+    return {locale,messages:messages[locale as  | 'en'  | 'ar']};
   }
 );

@@ -1,124 +1,67 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useRouter } from "next/navigation";
+
 import { useDispatch } from "react-redux";
 
-import {
-  loginSchema,
-  LoginFormData,
-} from "@/features/auth/schema";
+import { useTranslations, useLocale } from "next-intl";
 
-import {
-  useLoginMutation,
-} from "@/features/auth/authApi";
+import { loginSchema, LoginFormData } from "@/features/auth/schema";
 
-import {
-  setCredentials,
-} from "@/features/auth/authSlice";
+import { useLoginMutation } from "@/features/auth/authApi";
 
-import {
-  setTokens,
-} from "@/lib/cookies";
+import { setCredentials } from "@/features/auth/authSlice";
+
+import { setTokens } from "@/lib/cookies";
+
+import { showSuccessToast } from "@/lib/toast";
 
 export default function LoginPage() {
-  const router =
-    useRouter();
+  const t = useTranslations("Login");
+  const locale = useLocale();
 
-  const dispatch =
-    useDispatch();
+  const router = useRouter();
 
-  const [
-    login,
-    { isLoading },
-  ] =
-    useLoginMutation();
+  const dispatch = useDispatch();
 
-  const [
-    loginError,
-    setLoginError,
-  ] = useState("");
+  const [login, { isLoading }] = useLoginMutation();
 
   const {
     register,
     handleSubmit,
-    formState: {
-      errors,
-    },
-  } =
-    useForm<LoginFormData>({
-      resolver:
-        zodResolver(
-          loginSchema
-        ),
-    });
 
-  const onSubmit =
-    async (
-      data:
-        LoginFormData
-    ) => {
-      try {
-        setLoginError(
-          ""
-        );
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-        const response =
-          await login(
-            data
-          ).unwrap();
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await login(data).unwrap();
 
-        setTokens(
-          response.data
-            .accessToken,
-          response.data
-            .refreshToken
-        );
+      setTokens({
+        accessToken: response.data.accessToken,
 
-        dispatch(
-          setCredentials(
-            response.data
-          )
-        );
+        refreshToken: response.data.refreshToken,
+      });
 
-        if (
-          response.data
-            .user
-            .userType ===
-          "SUPER_ADMIN"
-        ) {
-          router.push(
-            "/en/admin"
-          );
-        } else {
-          router.push(
-            "/en"
-          );
-        }
-      } catch (
-        error: any
-      ) {
-        console.error(
-          "Login Error:",
-          error
-        );
+      dispatch(setCredentials(response.data));
 
-        if (
-          error?.status ===
-          401
-        ) {
-          setLoginError(
-            "Incorrect email or password"
-          );
-        } else {
-          setLoginError(
-            "Something went wrong. Please try again."
-          );
-        }
+      showSuccessToast(t("welcomeUser", { name: response.data.user.fullName }));
+
+      if (response.data.user.userType === "SUPER_ADMIN") {
+        router.push(`/${locale}/admin`);
+      } else {
+        router.push(`/${locale}`);
       }
-    };
+    } catch (error) {
+      console.error("Login Error:", error);
+    }
+  };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-brand-bg p-4">
@@ -131,168 +74,85 @@ export default function LoginPage() {
 
           <div className="relative z-10 max-w-md">
             <span className="mb-4 inline-flex rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700">
-              Welcome Back
+              {t("welcomeBack")}
             </span>
 
             <h1 className="mb-4 text-5xl font-bold leading-tight text-slate-800">
-              Login to your account
+              {t("pageTitle")}
             </h1>
 
-            <p className="text-lg text-slate-700">
-              Access your dashboard
-              and continue
-              managing your
-              cleaning services
-              easily.
-            </p>
+            <p className="text-lg text-slate-700">{t("pageDescription")}</p>
           </div>
         </section>
 
         <section className="flex items-center justify-center p-8 md:p-12">
           <div className="w-full max-w-md">
-
             <div className="mb-8">
               <div className="mb-5 flex items-center justify-center rounded-2xl">
-                <img
-                  src="/main_icon.png"
-                  alt="zoom icon"
-                />
+                <img src="/nav/main_icon.png" alt="logo" />
               </div>
 
               <h2 className="text-4xl font-bold text-foreground">
-                Sign In
+                {t("signIn")}
               </h2>
 
               <p className="mt-2 text-text-secondary">
-                Enter your
-                credentials to
-                continue
+                {t("enterCredentials")}
               </p>
             </div>
 
             <form
-              onSubmit={handleSubmit(
-                onSubmit
-              )}
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit(onSubmit)(e);
+              }}
               className="space-y-5"
             >
+              
               <div>
                 <label className="mb-2 block text-sm font-medium text-foreground">
-                  Email
+                  {t("email")}
                 </label>
 
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  {...register(
-                    "email"
-                  )}
-                  className="
-                    h-14
-                    w-full
-                    rounded-2xl
-                    border
-                    border-border
-                    bg-white
-                    px-5
-                    outline-none
-                    transition-all
-                    duration-200
-                    focus:border-brand
-                    focus:ring-4
-                    focus:ring-brand/30
-                  "
+                  placeholder={t("emailPlaceholder")}
+                  {...register("email")}
+                  className="w-full rounded-2xl border border-border bg-white px-5 py-3 outline-none transition-all duration-200 focus:border-brand focus:ring-4 focus:ring-brand/30"
                 />
 
                 {errors.email && (
                   <p className="mt-2 text-sm text-red-500">
-                    {
-                      errors
-                        .email
-                        .message
-                    }
+                    {errors.email.message === "Invalid email" ? t("errorInvalidEmail") : errors.email.message}
                   </p>
                 )}
               </div>
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-foreground">
-                  Password
+                  {t("password")}
                 </label>
 
                 <input
                   type="password"
-                  placeholder="Enter your password"
-                  {...register(
-                    "password"
-                  )}
-                  className="
-                    h-14
-                    w-full
-                    rounded-2xl
-                    border
-                    border-border
-                    bg-white
-                    px-5
-                    outline-none
-                    transition-all
-                    duration-200
-                    focus:border-brand
-                    focus:ring-4
-                    focus:ring-brand/30
-                  "
+                  placeholder={t("passwordPlaceholder")}
+                  {...register("password")}
+                  className="w-full rounded-2xl border border-border bg-white px-5 py-3 outline-none transition-all duration-200 focus:border-brand focus:ring-4 focus:ring-brand/30"
                 />
 
                 {errors.password && (
                   <p className="mt-2 text-sm text-red-500">
-                    {
-                      errors
-                        .password
-                        .message
-                    }
+                    {errors.password.message === "Password must be at least 6 characters" ? t("errorPasswordLength") : errors.password.message}
                   </p>
                 )}
               </div>
 
-              {loginError && (
-                <div
-                  className="
-                    rounded-2xl
-                    border
-                    border-red-200
-                    bg-red-50
-                    px-4
-                    py-3
-                    text-sm
-                    font-medium
-                    text-red-600
-                  "
-                >
-                  {loginError}
-                </div>
-              )}
-
               <button
                 type="submit"
-                disabled={
-                  isLoading
-                }
-                className="
-                  h-14
-                  w-full
-                  rounded-2xl
-                  bg-slate-900
-                  text-lg
-                  font-medium
-                  text-white
-                  transition
-                  hover:opacity-90
-                  disabled:opacity-50
-                "
+                disabled={isLoading}
+                className="w-full cursor-pointer rounded-2xl bg-slate-900 py-3 text-lg font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {isLoading
-                  ? "Loading..."
-                  : "Login"}
+                {isLoading ? t("loading") : t("loginButton")}
               </button>
             </form>
           </div>

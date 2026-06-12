@@ -1,3 +1,79 @@
 {
-  "login": "Login"
+  "Navbar": {
+    "Startseite": "Home",
+    "Dienstleistungen": "Services",
+    "Über uns": "About Us",
+    "Blogs": "Blogs",
+    "Kontakt": "Contact"
+  },
+  "Hero": {
+    "title": "Your leading provider of cleaning services",
+    "description": "We strive to understand what you're going through, what you need, what your price tags are, and what other means are available.",
+    "requestService": "Request Service",
+    "contactUs": "Contact Us",
+    "wellnessBadge": "Wellness Cleaning",
+    "statsText": "Million satisfied customers, one goal: well-being"
+  },
+  "Services": {
+    "title": "Offering The Most Effective Cleaning Solutions",
+    "description": "We are happy to help you get your clothes fresh and clean. We are here for you 24/7 for questions, concerns, or suggestions.",
+    "items": [
+      {
+        "title": "Professional Window Cleaning Services",
+        "description": "Enhance your space with our eco-friendly window cleaning for a clear view."
+      },
+      {
+        "title": "Comprehensive House Cleaning Solutions",
+        "description": "Thorough deep cleaning services designed to keep every room in your home spotless and sanitized."
+      },
+      {
+        "title": "Move-In/Move-Out Cleaning Services",
+        "description": "Seamless cleaning solutions to make your transition into or out of a property smooth and hassle-free."
+      },
+      {
+        "title": "Property Maintenance Services",
+        "description": "Reliable property upkeep and repairs to preserve the value and beauty of your building."
+      },
+      {
+        "title": "Regular Care and Maintenance Services",
+        "description": "Scheduled routine cleaning and maintenance tailored to support your busy lifestyle."
+      }
+    ]
+  },
+  "Login": {
+    "pageTitle": "Login to your account",
+    "pageDescription": "Access your dashboard and continue managing your cleaning services easily.",
+    "signIn": "Sign In",
+    "enterCredentials": "Enter your credentials to continue",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "loginButton": "Login",
+    "loading": "Loading...",
+    "errorIncorrect": "Incorrect email or password",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "welcomeBack": "Welcome Back",
+    "welcomeUser": "Welcome {name}",
+    "errorInvalidEmail": "Invalid email address",
+    "errorPasswordLength": "Password must be at least 6 characters"
+  },
+  "Admin": {
+    "dashboardTitle": "Admin Dashboard",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "userType": "User Type",
+    "noPhone": "No Phone",
+    "logout": "Logout",
+    "failedToLoadUser": "Failed to load user"
+  },
+  "ApiErrors": {
+    "badRequest": "Bad request",
+    "unauthorized": "Incorrect email or password",
+    "forbidden": "Forbidden",
+    "notFound": "Not found",
+    "serverError": "Server error",
+    "generic": "Something went wrong"
+  }
 }

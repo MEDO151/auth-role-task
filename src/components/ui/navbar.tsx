@@ -4,6 +4,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 
@@ -47,11 +48,11 @@ const HamburgerIcon = ({
     <path
       className="
         origin-center
-        -translate-y-[7px]
+        translate-y-[-7px]
         transition-all
         duration-300
         group-aria-expanded:translate-y-0
-        group-aria-expanded:rotate-[315deg]
+        group-aria-expanded:rotate-315
       "
       d="M4 12L20 12"
     />
@@ -73,7 +74,7 @@ const HamburgerIcon = ({
         transition-all
         duration-300
         group-aria-expanded:translate-y-0
-        group-aria-expanded:rotate-[135deg]
+        group-aria-expanded:rotate-135
       "
       d="M4 12H20"
     />
@@ -90,31 +91,6 @@ export interface NavbarProps
   navigationLinks?: NavbarNavLink[];
 }
 
-const defaultNavigationLinks: NavbarNavLink[] =
-  [
-    {
-      href: "#",
-      label: "Startseite",
-    },
-    {
-      href: "#services",
-      label:
-        "Dienstleistungen",
-    },
-    {
-      href: "#about",
-      label: "Über uns",
-    },
-    {
-      href: "#blogs",
-      label: "Blogs",
-    },
-    {
-      href: "#contact",
-      label: "Kontakt",
-    },
-  ];
-
 export const Navbar =
   React.forwardRef<
     HTMLElement,
@@ -123,12 +99,22 @@ export const Navbar =
     (
       {
         className,
-        navigationLinks =
-          defaultNavigationLinks,
+        navigationLinks,
         ...props
       },
       ref
     ) => {
+      const t = useTranslations("Navbar");
+      const defaultLinks: NavbarNavLink[] = [
+        { href: "#", label: t("Startseite") },
+        { href: "#services", label: t("Dienstleistungen") },
+        { href: "#about", label: t("Über uns") },
+        { href: "#blogs", label: t("Blogs") },
+        { href: "#contact", label: t("Kontakt") },
+      ];
+      
+      const activeLinks = navigationLinks || defaultLinks;
+
       const [
         isMobile,
         setIsMobile,
@@ -206,7 +192,7 @@ export const Navbar =
           ref={combinedRef}
           {...(props as any)}
         >
-          <div className="flex items-center justify-between py-6">
+          <div className="flex w-full items-center justify-between py-6">
             {/* Logo */}
             <div className="shrink-0">
               <a href="#">
@@ -223,9 +209,9 @@ export const Navbar =
 
             {/* Desktop Navigation */}
             {!isMobile && (
-              <NavigationMenu className="ml-auto">
+              <NavigationMenu>
                 <NavigationMenuList className="flex gap-15 truncate">
-                  {navigationLinks.map(
+                  {activeLinks.map(
                     (
                       link,
                       index
@@ -245,7 +231,7 @@ export const Navbar =
 
             {/* Mobile Menu */}
             {isMobile && (
-              <div className="ml-auto">
+              <div className="ms-auto">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button className="group h-10 w-10 cursor-pointer" size="icon" variant="ghost">
@@ -259,7 +245,7 @@ export const Navbar =
                   <PopoverContent align="end" className="w-64 rounded-2xl border border-slate-200 p-2">
                     <NavigationMenu className="max-w-none">
                       <NavigationMenuList className="flex-col items-start gap-1">
-                        {navigationLinks.map(
+                        {activeLinks.map(
                           (
                             link,
                             index

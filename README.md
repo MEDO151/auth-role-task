@@ -1,36 +1,269 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cleaning Services Platform
 
-## Getting Started
+A modern multilingual cleaning services platform built with **Next.js**, **TypeScript**, **Redux Toolkit**, **RTK Query**, and **Tailwind CSS**.
 
-First, run the development server:
+The project includes:
+
+* Authentication & Authorization
+* Protected Routes
+* Role-Based Access Control
+* Refresh Token Mechanism
+* Global API Error Handling
+* Toast Notification System
+* Multilingual Support (`next-intl`)
+* Responsive Landing Page
+* Admin Dashboard
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* Next.js 15 (App Router)
+* React 19
+* TypeScript
+* Tailwind CSS
+* Shadcn UI
+
+### State Management
+
+* Redux Toolkit
+* RTK Query
+
+### Forms & Validation
+
+* React Hook Form
+* Zod
+
+### Internationalization
+
+* next-intl
+
+### Notifications
+
+* Sonner
+
+---
+
+## Features
+
+### Authentication System
+
+* Login functionality
+* Access Token & Refresh Token support
+* Automatic token refresh
+* Persistent authentication using cookies
+* Role-based redirects
+
+### Route Protection
+
+Protected pages cannot be accessed without authentication.
+
+#### Protected Routes
+
+* Home Page (`/`)
+* Admin Dashboard (`/admin`)
+
+#### Public Routes
+
+* Login Page (`/login`)
+
+Authenticated users are automatically redirected away from the login page.
+
+---
+
+## Internationalization (i18n)
+
+The project supports multiple languages using **next-intl**.
+
+Supported locales:
+
+```txt
+en
+ar
+```
+
+Locale-aware routing example:
+
+```txt
+/en/login
+/ar/login
+/en/admin
+```
+
+---
+
+## Folder Structure
+
+```txt
+src
+├── app
+│   ├── [locale]
+│   │   ├── admin
+│   │   ├── login
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── globals.css
+│   └── icon.png
+│
+├── components
+│   ├── guards
+│   ├── sections
+│   ├── shared
+│   └── ui
+│
+├── features
+│   └── auth
+│       ├── authApi.ts
+│       ├── authSlice.ts
+│       └── schema.ts
+│
+├── i18n
+│   ├── request.ts
+│   └── routing.ts
+│
+├── lib
+│   ├── baseQuery.ts
+│   ├── cookies.ts
+│   ├── handle-api-error.ts
+│   ├── toast.ts
+│   └── utils.ts
+│
+├── messages
+│   ├── ar.json
+│   └── en.json
+│
+├── store
+│   ├── provider.tsx
+│   └── store.ts
+│
+├── types
+└── middleware.ts
+```
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone <your-repository-url>
+```
+
+Navigate into the project:
+
+```bash
+cd your-project-name
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+---
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_API_URL=your_api_url
+```
+
+---
+
+## Running the Project
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Authentication Flow
 
-To learn more about Next.js, take a look at the following resources:
+1. User logs in
+2. API returns:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   * Access Token
+   * Refresh Token
+   * User Data
+3. Tokens are stored in cookies
+4. Redux stores authentication state
+5. Protected routes become accessible
+6. Expired tokens are refreshed automatically
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## API Error Handling
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project includes centralized API error handling.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Handled status codes:
+
+```txt
+400 → Bad Request
+401 → Unauthorized
+403 → Forbidden
+404 → Not Found
+500 → Server Error
+```
+
+Errors are automatically displayed using toast notifications.
+
+---
+
+## Scripts
+
+Run development server:
+
+```bash
+npm run dev
+```
+
+Build production app:
+
+```bash
+npm run build
+```
+
+Start production server:
+
+```bash
+npm run start
+```
+
+Run linting:
+
+```bash
+npm run lint
+```
+
+---
+
+## Future Improvements
+
+* Registration System
+* Forgot Password Flow
+* Dark Mode
+* Testing (Jest / Cypress)
+* Dashboard Analytics
+* Better Role Permissions
+
+---
+
+## Author
+
+Built with ❤️ using Next.js & TypeScript.

@@ -1,60 +1,32 @@
 import {
   createSlice,
   PayloadAction,
-} from '@reduxjs/toolkit';
+} from "@reduxjs/toolkit";
 
 import type {
   AuthState,
   LoginData,
-} from './types';
+} from "@/types/auth";
 
-const initialState:
-  AuthState = {
-  accessToken:
-    null,
-
-  refreshToken:
-    null,
-
-  user: null,
-};
+const initialState:AuthState = {accessToken:null,refreshToken:null,user: null};
 
 const authSlice =
   createSlice({
-    name: 'auth',
+    name: "auth",
 
     initialState,
 
     reducers: {
-      setCredentials: (
-        state,
-        action:
-          PayloadAction<LoginData>
-      ) => {
-        state.accessToken =
-          action.payload
-            .accessToken;
-
-        state.refreshToken =
-          action.payload
-            .refreshToken;
-
-        state.user =
-          action.payload
-            .user;
+      setCredentials: (state,action:PayloadAction<LoginData>,) => {
+        state.accessToken =action.payload.accessToken;
+        state.refreshToken =action.payload.refreshToken;
+        state.user =action.payload.user;
       },
 
-      logout: (
-        state
-      ) => {
-        state.accessToken =
-          null;
-
-        state.refreshToken =
-          null;
-
-        state.user =
-          null;
+      logout: (state) => {
+        state.accessToken =null;
+        state.refreshToken =null;
+        state.user =null;
       },
     },
   });

@@ -1,43 +1,19 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-export const setTokens = (
-  accessToken: string,
-  refreshToken: string
-) => {
-  Cookies.set(
-    'accessToken',
-    accessToken,
-    {
-      expires: 7,
-      secure: true,
-      sameSite: 'strict',
-    }
-  );
+export const getAccessToken = () => Cookies.get("accessToken");
 
-  Cookies.set(
-    'refreshToken',
-    refreshToken,
-    {
-      expires: 7,
-      secure: true,
-      sameSite: 'strict',
-    }
-  );
+export const getRefreshToken = () => Cookies.get("refreshToken",);
+
+export const setTokens = ({accessToken,refreshToken,}: {
+  accessToken: string;
+  refreshToken: string;
+}) => {
+  Cookies.set("accessToken",accessToken,);
+  Cookies.set("refreshToken",refreshToken,);
 };
 
-export const getToken =
-  () =>
-    Cookies.get(
-      'accessToken'
-    );
-
-export const clearTokens =
-  () => {
-    Cookies.remove(
-      'accessToken'
-    );
-
-    Cookies.remove(
-      'refreshToken'
+export const clearTokens = () => {
+    Cookies.remove("accessToken",);
+    Cookies.remove("refreshToken",
     );
   };
