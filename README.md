@@ -248,19 +248,6 @@ Run linting:
 
 ```bash
 npm run lint
-```
-
----
-
-## Future Improvements
-
-* Registration System
-* Forgot Password Flow
-* Dark Mode
-* Testing (Jest / Cypress)
-* Dashboard Analytics
-* Better Role Permissions
-
 ---
 
 ## Author
