@@ -26,9 +26,9 @@ export default function HeroSection() {
   return (
     <section className="min-h-screen px-4 md:px-4.5 relative">
       <div className="h-full grow pb-8 pt-24">
-        <div className="h-full rounded-[32px] overflow-hidden lg:bg-[url('/hero/hero-background.png')] lg:bg-[length:100%_100%] lg:bg-center">
+        <div className="h-full rounded-[32px] overflow-hidden lg:bg-[url('/hero/hero-background.png')] lg:bg-size-[100%_100%] lg:bg-center">
           <div className="flex flex-col justify-center gap-[29px] lg:mx-15 lg:mt-[70px] lg:flex-row">
-            <div className="min-w-0 flex-1 basis-[42%] rounded-[32px] bg-white p-8  lg:my-5 xl:p-14 h-fit">
+            <div className="min-w-0 relative z-1 flex-1 basis-[42%] rounded-[32px] bg-white p-8 lg:my-5 xl:p-14 h-fit">
               <h1 className="xl:mb-3 mb-2 text-4xl font-bold leading-[126%] tracking-[-0.02em] text-primary md:text-5xl line-clamp-3">
                 {t("title")}
               </h1>
@@ -38,13 +38,14 @@ export default function HeroSection() {
               </p>
 
               <div className="flex md:flex-row flex-col md:gap-8 gap-6">
-                <button className="cursor-pointer truncate rounded-full bg-black px-6 py-4 text-white">
+                <button className="cursor-pointer truncate rounded-full lg:w-full md:w-fit bg-black px-6 py-4 text-white z-1 transition-all duration-300 hover:-translate-y-1">
                   {t("requestService")}
                 </button>
-                <button className="cursor-pointer truncate rounded-full border border-black px-6 py-4">
+                <button className="cursor-pointer truncate rounded-full lg:w-full md:w-fit border border-black px-6 py-4 z-1 transition-all duration-300 hover:-translate-y-1">
                   {t("contactUs")}
                 </button>
               </div>
+                <Image src="/hero/hero-decoration-shape.png" alt="hero icon" width={150} height={75} className="object-contain absolute bottom-0 right-0 z-0" />
             </div>
             <div className="relative min-w-0 flex-1 basis-[58%] rounded-[32px] bg-[url('/hero/hero-background.png')] bg-cover bg-right lg:bg-none flex items-end justify-center overflow-hidden max-md:px-6 max-md:pt-10">
               <Image
