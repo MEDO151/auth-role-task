@@ -58,11 +58,11 @@ export default function ServicesSection() {
                 className="mb-6 object-contain"
               />
 
-              <h3 className="mb-4 text-[24px] font-semibold leading-[140%] text-primary md:w-[75%]">
+              <h3 className="mb-4 text-[24px] font-bold leading-[140%] text-primary">
                 {services[1].title}
               </h3>
 
-              <p className="line-clamp-3 text-sm leading-[170%] text-[#5E6673]">
+              <p className="text-primary md:w-[75%]">
                 {services[1].description}
               </p>
             </div>
