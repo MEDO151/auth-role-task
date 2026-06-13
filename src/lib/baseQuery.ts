@@ -47,14 +47,20 @@ export const baseQueryWithRefresh: BaseQueryFn<string | FetchArgs,unknown,FetchB
     const refreshResult = await rawBaseQuery({url:"/api/auth/refresh",method:"POST",body: {refreshToken}},api,extraOptions,);
 
     if (refreshResult.data) {
-      const tokens = refreshResult.data as {accessToken: string; refreshToken: string;};
-
-      setTokens(tokens);
-
-      result = await rawBaseQuery(args,api,extraOptions,);
+      const response =
+        refreshResult.data as {
+          data: {
+            accessToken: string;
+            refreshToken: string;
+          };
+        };
+      setTokens({
+        accessToken:response.data.accessToken,
+        refreshToken:response.data.refreshToken,
+      });
+      result = await rawBaseQuery(args,api,extraOptions);
     } else {
       clearTokens();
-
       const locale = getLocale();
       window.location.href =`/${locale}/login`;
     }

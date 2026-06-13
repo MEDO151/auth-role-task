@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+
 import { useLocale } from "next-intl";
 
-import { RootState } from "@/store/store";
+import { useGetCurrentUserQuery } from "@/features/auth/authApi";
 
 export default function AdminGuard({
   children,
@@ -14,19 +14,32 @@ export default function AdminGuard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+
   const locale = useLocale();
 
-  const user = useSelector((state: RootState) => state.auth.user);
+  const { data, isLoading } = useGetCurrentUserQuery();
+
+  const user = data?.data;
 
   useEffect(() => {
-    if (!user) return;
+    if (isLoading) return;
+
+    if (!user) {
+      router.replace(`/${locale}/login`);
+
+      return;
+    }
 
     if (user.userType !== "SUPER_ADMIN") {
       router.replace(`/${locale}`);
     }
-  }, [user, router, locale]);
+  }, [user, isLoading, router, locale]);
 
-  if (user?.userType !== "SUPER_ADMIN") {
+  if (isLoading) {
+    return null;
+  }
+
+  if (!user || user.userType !== "SUPER_ADMIN") {
     return null;
   }
 
