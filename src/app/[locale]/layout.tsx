@@ -23,11 +23,6 @@ export const metadata:
 
     description:
       "Professional cleaning services for homes and offices. Reliable, fast, and high-quality cleaning solutions tailored to your needs.",
-
-    icons: {
-      icon:
-        "/favicon.ico",
-    },
 };
 
 const urbanist = Urbanist({
