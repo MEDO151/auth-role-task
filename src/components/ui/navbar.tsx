@@ -188,7 +188,7 @@ export const Navbar =
 
       return (
         <header
-          className={cn(`fixed top-0 z-50 w-full bg-white px-4 md:px-8 lg:px-[135px]`,className)}
+          className={cn(`fixed shadow-[0px_30px_40px_-12px_rgba(0,0,0,0.08)] top-0 z-50 w-full bg-white px-4 md:px-8 lg:px-[135px]`,className)}
           ref={combinedRef}
           {...(props as any)}
         >
